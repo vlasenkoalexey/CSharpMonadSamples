@@ -13,7 +13,7 @@ namespace Monads
             return new Just<A>(value);
         }
 
-        public Maybe<B> Bind<A, B>(Func<A, Maybe<B>> func)
+        public Maybe<B> Bind<B>(Func<A, Maybe<B>> func)
         {
             var justa = this as Just<A>;
             return justa == null ?
@@ -33,7 +33,7 @@ namespace Monads
     public class Just<T> : Maybe<T>
     {
         public T Value { get; private set; }
-        public Just(T value) // Monadic constructor
+        internal Just(T value) // Monadic constructor
         {
             Value = value;
         }

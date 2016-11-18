@@ -17,7 +17,9 @@ namespace Monads
 
         public ListMonad<string> GetGrandChildrenNamesLinq(User user)
         {
-            return user.Children.Bind(child => child.Children).Bind(grandChild => ListMonad<String>.Return(grandChild.Name));
+            return user.Children
+                .Bind(child => child.Children)
+                .Bind(grandChild => ListMonad<String>.Return(grandChild.Name));
         }
     }
 }

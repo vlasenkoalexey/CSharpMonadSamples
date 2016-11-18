@@ -8,7 +8,8 @@ namespace MonadsExtensions
 {
     public static class ListMonadAsExtensions
     {
-        public static IEnumerable<B> Bind<A, B>(this IEnumerable<A> value, Func<A, IEnumerable<B>> func)
+        public static IEnumerable<B> Bind<A, B>(this IEnumerable<A> value, 
+            Func<A, IEnumerable<B>> func)
         {
             return value.SelectMany(element => func(element));
         }

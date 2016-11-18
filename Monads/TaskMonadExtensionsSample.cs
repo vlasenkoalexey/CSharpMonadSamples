@@ -48,7 +48,8 @@ namespace MonadsExtensions
                 {
                     // Simulate a slow operation
                     Thread.Sleep(100);
-                    Console.WriteLine("- GetUserNameById: Thread={0}, userId={1}", Thread.CurrentThread.ManagedThreadId, obj);
+                    Console.WriteLine("- GetUserNameById: Thread={0}, userId={1}", 
+                        Thread.CurrentThread.ManagedThreadId, obj);
                     return "aleksey";
                 },
                 userId);
@@ -61,7 +62,8 @@ namespace MonadsExtensions
                 {
                     // Simulate a slow operation
                     Thread.Sleep(100);
-                    Console.WriteLine("- GetUserCode: Thread={0}, name={1}", Thread.CurrentThread.ManagedThreadId, obj);
+                    Console.WriteLine("- GetUserCode: Thread={0}, name={1}", 
+                        Thread.CurrentThread.ManagedThreadId, obj);
                     return name.GetHashCode();
                 },
                 name);

@@ -17,7 +17,9 @@ namespace MonadsExtensions
 
         public IEnumerable<string> GetGrandChildrenNamesLinq(User user)
         {
-            return user.Children.Bind(child => child.Children).Bind(grandChild => ListMonadAsExtensions.Return(grandChild.Name));
+            return user.Children
+                .Bind(child => child.Children)
+                .Bind(grandChild => ListMonadAsExtensions.Return(grandChild.Name));
         }
     }
 }

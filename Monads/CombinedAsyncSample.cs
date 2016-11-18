@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 
 namespace Monads
 {
-    class MaybeSample
+    class CombinedAsyncSample
     {
         public class User
         {
             public string UserName { get; set; }
-            public Order UserOrder { get; set; }
+            public async Task<Order> GetUserOrderAsync()
+            {
+                return await Task<Order>.Factory.StartNew(() => new Order());
+            }
         }
 
         public class Order
         {
             public OrderTracking Tracking { get; set; }
+            public async Task<OrderTracking> GetTrackingAsync()
+            {
+                return await Task<OrderTracking>.Factory.StartNew(() => new OrderTracking());
+            }
         }
 
         public class OrderTracking
@@ -25,14 +32,14 @@ namespace Monads
             public string Carrier { get; set; }
         }
 
-        public string GetTrackingNumber(User user)
+        public async Task<string> GetTrackingNumberAsync(User user)
         {
             if (user != null)
             {
-                var order = user.UserOrder;
+                var order = await user.GetUserOrderAsync();
                 if (order != null)
                 {
-                    var tracking = order.Tracking;
+                    var tracking = await order.GetTrackingAsync();
                     if (tracking != null)
                     {
                         return tracking.TrackingNumber;
@@ -41,11 +48,6 @@ namespace Monads
             }
 
             return null;
-        }
-
-        public string GetTrackingNumberShort(User user)
-        {
-            return user?.UserOrder?.Tracking?.TrackingNumber;
         }
     }
 }

@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CombinedMonadSample.cs" />
     <Compile Include="IMonad.cs" />
     <Compile Include="ListMonadAsExtensions.cs" />
     <Compile Include="ListMonadAsExtensionSample.cs" />
@@ -51,8 +52,9 @@
     <Compile Include="ListCommonWaySample.cs" />
     <Compile Include="ListMonad.cs" />
     <Compile Include="Maybe.cs" />
+    <Compile Include="CombinedAsyncSample.cs" />
+    <Compile Include="MaybeMonadSample.cs" />
     <Compile Include="MaybeSample.cs" />
-    <Compile Include="MaybeCommonWaySample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskMonad.cs" />

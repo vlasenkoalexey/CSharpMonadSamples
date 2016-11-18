@@ -23,10 +23,13 @@ namespace Monads
             }
 
             return new ListMonad<B>(results);
+        }
 
-            // Same as:
-            //return new ListMonad<B>(elements.SelectMany(element => func(element).elements));
+        // Alternative implementation
+        public ListMonad<B> BindAlt<B>(Func<A, ListMonad<B>> func)
+        {
             // SelectMany is also known as flatMap
+            return new ListMonad<B>(elements.SelectMany(element => func(element).elements));
         }
 
         public static ListMonad<A> Return(A element)
