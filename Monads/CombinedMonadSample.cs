@@ -4,89 +4,92 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MonadsExtensions;
+using System.Diagnostics;
 
 namespace Monads
 {
-    class CombinedMonadSample
+    public class CombinedMonadSample
     {
-        public class RequestTransforerProcessor
+        public virtual Task<Maybe<String>> GetData()
         {
-            public static Task<Maybe<String>> GetData()
-            {
-                return Task<Maybe<String>>.Factory.StartNew(
-                    () => Maybe<String>.Return(""));
-            }
+            Trace.WriteLine("get data");
+            return Task<Maybe<String>>.Factory.StartNew(
+                () => Maybe<String>.Return("data"));
+        }
 
-            public static Task<Maybe<String>> GetMoreData(Maybe<String> data)
-            {
-                return Task<Maybe<String>>.Factory.StartNew(
-                    () => Maybe<String>.Return(""));
-            }
+        public virtual Task<Maybe<String>> GetMoreData(Maybe<String> data)
+        {
+            Trace.WriteLine("get more data");
+            return Task<Maybe<String>>.Factory.StartNew(
+                () => data.Bind(d => Maybe<string>.Return(d + " more")));
+        }
 
-            public static Task<bool> SendProcessedResults(Maybe<String> data)
-            {
-                return Task<bool>.Factory.StartNew(() => data as Just<String> != null);
-            }
+        public virtual Task<Maybe<String>> SendProcessedResults(Maybe<String> data)
+        {
+            Trace.WriteLine("send processed results");
+            return Task<Maybe<String>>.Factory.StartNew(
+                () => data.Bind(d => Maybe<string>.Return("send_result: " + d)));
+        }
 
-            public static Maybe<String> Validate(String data)
-            {
-                return null;
-            }
+        public virtual Maybe<String> Validate(String data)
+        {
+            Trace.WriteLine("validate");
+            return Maybe<String>.Return(data + " validated");
+        }
 
-            public static Maybe<String> Sanitize(String data)
-            {
-                return Maybe<String>.Return("data");
-            }
+        public virtual Maybe<String> Sanitize(String data)
+        {
+            Trace.WriteLine("sanitize");
+            return Maybe<String>.Return(data + " sanitized");
+        }
 
-            public static Maybe<String> Process(String data)
-            {
-                return Maybe<String>.Return("data");
-            }
+        public virtual Maybe<String> Process(String data)
+        {
+            Trace.WriteLine("process");
+            return Maybe<String>.Return(data + " processed");
+        }
 
-            public static Task<bool> RunWorkflow()
+        public Task<Maybe<String>> RunWorkflowNested()
+        {
+            return GetData().Bind(data =>
             {
-                return GetData().Bind(data =>
+                Maybe<String> processedData = data
+                    .Bind(raw => Validate(raw)
+                        .Bind(validated => Sanitize(validated)
+                            .Bind(sanitized => Process(sanitized))));
+
+                return GetMoreData(processedData).Bind(extraData =>
                 {
-                    Maybe<String> processedData = data
+                    Maybe<String> processedExtraData = extraData
                         .Bind(raw => Validate(raw)
                             .Bind(validated => Sanitize(validated)
                                 .Bind(sanitized => Process(sanitized))));
 
-                    return GetMoreData(processedData).Bind(extraData =>
-                    {
-                        Maybe<String> processedExtraData = extraData
-                            .Bind(raw => Validate(raw)
-                                .Bind(validated => Sanitize(validated)
-                                    .Bind(sanitized => Process(sanitized))));
-
-                        return SendProcessedResults(processedExtraData);
-                    });
+                    return SendProcessedResults(processedExtraData);
                 });
-            }
-
-            //TODO think if these 2 samples are eqvivalent, and run them to confirm
-
-            public static Task<bool> RunWorkflow2()
-            {
-                return GetData().Bind(data =>
-                {
-                    Maybe<String> processedData = data
-                        .Bind(raw => Validate(raw))
-                        .Bind(validated => Sanitize(validated))
-                        .Bind(sanitized => Process(sanitized));
-
-                    return GetMoreData(processedData);
-                }).Bind(extraData =>
-                {
-                    Maybe<String> processedData = extraData
-                        .Bind(raw => Validate(raw))
-                        .Bind(validated => Sanitize(validated))
-                        .Bind(sanitized => Process(sanitized));
-
-                    return SendProcessedResults(processedData);
-                });
-            }
+            });
         }
 
+        // Another version
+        public Task<Maybe<String>> RunWorkflowFlat()
+        {
+            return GetData().Bind(data =>
+            {
+                Maybe<String> processedData = data
+                    .Bind(raw => Validate(raw))
+                    .Bind(validated => Sanitize(validated))
+                    .Bind(sanitized => Process(sanitized));
+
+                return GetMoreData(processedData);
+            }).Bind(extraData =>
+            {
+                Maybe<String> processedData = extraData
+                    .Bind(raw => Validate(raw))
+                    .Bind(validated => Sanitize(validated))
+                    .Bind(sanitized => Process(sanitized));
+
+                return SendProcessedResults(processedData);
+            });
+        }
     }
 }
