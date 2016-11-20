@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonadsTest", "MonadsTest\Mo
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MonadsFs", "MonadsFs\MonadsFs.fsproj", "{764ACAC7-B994-4C3D-B0EE-C1462183158F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonadsHaskell", "MonadsHaskell", "{D917C9DD-F228-42BF-BDE3-08A73AC854E1}"
+	ProjectSection(SolutionItems) = preProject
+		MonadsHaskell\CombinedMonadSample.hs = MonadsHaskell\CombinedMonadSample.hs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

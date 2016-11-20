@@ -24,7 +24,7 @@ module CombinedMonadSample =
         async {
             let! rawOpt = getData() // rawOpt is of type Option<String>
             let processed = maybe { // processed is of type Option<String>
-                let! raw = rawOpt
+                let! raw = rawOpt   // same as rawOpt.Bind(raw => ...
                 let! validated = validate(raw)
                 let! sanitized = sanitize(validated)
                 return! processData(sanitized)
@@ -38,7 +38,6 @@ module CombinedMonadSample =
                 let! sanitized = sanitize(validated)
                 return! processData(sanitized)
             }
-
 
             return! sendProcessedResults(processedMore)
         }
