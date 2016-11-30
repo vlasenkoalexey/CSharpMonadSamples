@@ -46,3 +46,28 @@ runWorflow =
 
         results <- sendProcessedResults processedMoreResult
         return results -- getting out of IO block
+
+-- function without parametes
+runWorflowWithoutDo = 
+    getData >>= \rawOpt -> -- \rawOpt -> ... is a lambda function with rawOpt parameter
+        let processedData = (
+                rawOpt >>= \raw -> -- \raw -> ... is a lambda function with raw parameter
+                    validate raw >>= \validated ->
+                        sanitize validated >>= \sanitized ->
+                            process sanitized)
+        in getMoreData processedData >>= \moreDataOpt -> 
+            let processedMoreResult = (
+                    moreDataOpt >>= \raw -> 
+                        validate raw >>= \validated ->
+                            sanitize validated >>= \sanitized ->
+                                process sanitized)
+            in sendProcessedResults processedMoreResult
+
+-- function without parametes
+runWorflowWithoutDoCompact = 
+    getData >>= \rawOpt -> -- \rawOpt -> rawOpt is a lambda function with rawOpt parameter
+        let processedData = (rawOpt >>= validate >>= sanitize >>= process)
+        in getMoreData processedData >>= \moreDataOpt -> 
+            let processedMoreResult = (moreDataOpt >>= validate >>= sanitize >>= process)
+            in sendProcessedResults processedMoreResult
+    

@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonadsHaskell", "MonadsHaskell", "{D917C9DD-F228-42BF-BDE3-08A73AC854E1}"
 	ProjectSection(SolutionItems) = preProject
 		MonadsHaskell\CombinedMonadSample.hs = MonadsHaskell\CombinedMonadSample.hs
+		Maybe.hs = Maybe.hs
+		MaybeAlt.hs = MaybeAlt.hs
 	EndProjectSection
 EndProject
 Global
