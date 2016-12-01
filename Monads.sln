@@ -12,8 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonadsHaskell", "MonadsHaskell", "{D917C9DD-F228-42BF-BDE3-08A73AC854E1}"
 	ProjectSection(SolutionItems) = preProject
 		MonadsHaskell\CombinedMonadSample.hs = MonadsHaskell\CombinedMonadSample.hs
-		Maybe.hs = Maybe.hs
-		MaybeAlt.hs = MaybeAlt.hs
+		MonadsHaskell\Maybe.hs = MonadsHaskell\Maybe.hs
+		MonadsHaskell\MaybeAlt.hs = MonadsHaskell\MaybeAlt.hs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F430F66C-7E17-4CFD-BA88-53725BD085A6}"
